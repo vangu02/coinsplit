@@ -1,7 +1,8 @@
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.RecursiveAction;
 
-public class RecursiveEuro {
+public class RecursiveEuro extends RecursiveAction {
 	
 	public static int ctvalue[] = new int[10];	
 	public static int maxct[] = new int[10];
@@ -12,7 +13,7 @@ public class RecursiveEuro {
 	public static int change = 0;
 	
 	
-	private static void split(int coin, int rest)
+	private static void split  (int coin, int rest)
 	{
 
 		/*
@@ -24,19 +25,20 @@ public class RecursiveEuro {
 	    change++;
 
 	 */
+
 		maxct[coin] = rest / ctvalue[coin];
+
 		for (ct[coin]=0;ct [coin]<=maxct[coin];ct[coin]++)
 		{
-			rest = rest - ct[coin]*ctvalue[coin]; 
+
 			if (coin>0)
 			{
-				split(--coin,rest);
+				split(--coin,rest - ct[coin]*ctvalue[coin]);
 			}
 			else
 			{
-				ct[0]=rest;
+				ct[0]= rest - ct[coin]*ctvalue[coin]; 
 			    System.out.println(String.format("coins divided over %sx2EUR %sx1EUR %sx50ct %sx20ct %sx10ct %sx5ct %sx2ct %sx1ct",ct[7],ct[6],ct[5],ct[4],ct[3],ct[2],ct[1],ct[0]));
-			    ++coin;
 				change++;
 			}
 		}
@@ -129,5 +131,11 @@ public class RecursiveEuro {
     	//System.out.println(String.format("%s coins divided over %sx2EUR %sx1EUR %sx50ct %sx20ct %sx10ct %sx5ct %sx2ct %sx1ct",mincoins,mineur2,mineur1,minct50,minct20,minct10,minct5,minct2,minct1));
     	
     }
+
+	@Override
+	protected void compute() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
