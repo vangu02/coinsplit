@@ -1,4 +1,7 @@
-public class SplitEuro {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class SplitEuroThreaded {
 	
     public static void main(String[] args)  {
     	System.out.println(String.format("Splitting euro"));
@@ -39,6 +42,21 @@ public class SplitEuro {
     	
     	long startTime = System.nanoTime();
 
+    	ExecutorService executor = Executors.newFixedThreadPool(5);
+    	for (int i = 0; i < 10; i++) 
+    	{
+    		Runnable worker = new WorkerThread("" + i);
+    		executor.execute(worker);
+    	}
+
+    	executor.shutdown();
+
+    	while (!executor.isTerminated()) 
+    	{
+    		
+    	}
+//    	System.out.println("Finished all threads");
+
     	maxeur2 = amount / 200;
     	for (eur2=0; eur2<=maxeur2; eur2++)
     	{
@@ -61,21 +79,28 @@ public class SplitEuro {
     							for (ct2=0; ct2<=maxct2; ct2++)
     							{
     								ct1 = amount - eur2*200 - eur1*100 - ct50*50 - ct20*20 - ct10*10 - ct5*5 -ct2*2;
-    								int coins = ct1+ct2+ct5+ct10+ct20+ct50+eur1+eur2;
-    								if (coins<mincoins) 
-    									{
-    										mincoins=coins;
-    										mineur2 = eur2;
-    										mineur1 = eur1;
-    										minct1 = ct1;
-    										minct2 = ct2;
-    										minct5 = ct5;
-    										minct10 = ct10;
-    										minct20 = ct20;
-    										minct50 = ct50;
-    									}
-    								//System.out.println(String.format("%s coins divided over %sx2EUR %sx1EUR %sx50ct %sx20ct %sx10ct %sx5ct %sx2ct %sx1ct",coins,eur2,eur1,ct50,ct20,ct10,ct5,ct2,ct1));
-    								change++;
+        							// maxct2= (amount - eur2*200 - eur1*100 - ct50*50 - ct20*20 - ct10*10 - ct5*5) / 2;
+        							//for (ct1=0; ct1<=maxct1; ct1++)
+        							//{
+        							//	if (eur2*200 + eur1*100 + ct50*50 + ct20*20 + ct10*10 + ct5*5 + ct2*2 + ct1==amount)
+        							//	{
+        									int coins = ct1+ct2+ct5+ct10+ct20+ct50+eur1+eur2;
+        									if (coins<mincoins) 
+        									{
+        										mincoins=coins;
+        										mineur2 = eur2;
+        										mineur1 = eur1;
+        										minct1 = ct1;
+        										minct2 = ct2;
+	    										minct5 = ct5;
+	    										minct10 = ct10;
+	    										minct20 = ct20;
+	    										minct50 = ct50;
+	    									}
+	    								System.out.println(String.format("%s coins divided over %sx2EUR %sx1EUR %sx50ct %sx20ct %sx10ct %sx5ct %sx2ct %sx1ct",coins,eur2,eur1,ct50,ct20,ct10,ct5,ct2,ct1));
+	    								change++;
+        							//	}
+        							//}
     							}
     						}
     			    			
